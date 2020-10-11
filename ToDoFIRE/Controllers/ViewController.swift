@@ -11,6 +11,7 @@ import Firebase
 class ViewController: UIViewController {
     
     let identifier = "tasksSegue"
+    var ref: DatabaseReference!
     
     @IBOutlet weak var warnLabel: UILabel!
     @IBOutlet weak var emailTextField: UITextField!
@@ -20,7 +21,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        ref = Database.database().reference(withPath: "users")
         NotificationCenter.default.addObserver(self, selector: #selector(kbDidShow), name: UIResponder.keyboardDidShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(kbDidHide), name: UIResponder.keyboardDidHideNotification, object: nil)
         
@@ -40,17 +41,15 @@ class ViewController: UIViewController {
     }
     
     @objc func kbDidShow(notification: Notification) {
-        
         guard let userInfo = notification.userInfo else { return }
         let kbFrameSize = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
         
-        scrollView.contentSize = CGSize(width: self.view.frame.width, height: self.view.frame.height + kbFrameSize.height)
-        
-        scrollView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: kbFrameSize.height, right: 0)
+        (self.view as! UIScrollView).contentSize = CGSize(width: self.view.bounds.size.width, height: self.view.bounds.size.height + kbFrameSize.height)
+        (self.view as! UIScrollView).scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: kbFrameSize.height, right: 0)
     }
     
     @objc func kbDidHide() {
-        scrollView.contentSize = CGSize(width: self.view.frame.width, height: self.view.frame.height)
+        (self.view as! UIScrollView).contentSize = CGSize(width: self.view.bounds.size.width, height: self.view.bounds.size.height)
     }
     
     func displayWarningLabel(withText text: String){
@@ -91,18 +90,16 @@ class ViewController: UIViewController {
             return
         }
         
-        Auth.auth().createUser(withEmail: email, password: password) { (user, error) in
+        Auth.auth().createUser(withEmail: email, password: password) { [weak self] (authResult, error) in
             
-            if error == nil {
-                if user != nil {
-                    
-                } else  {
-                    print("user is not created")
-                }
-            } else {
-                print(error!.localizedDescription)
+            guard error == nil, let user = authResult?.user else {
                 
+                print(error!.localizedDescription)
+                return
             }
+            
+            let userRef = self?.ref.child(user.uid)
+            userRef?.setValue(user.email, forKey: "email")
         }
         
     }
