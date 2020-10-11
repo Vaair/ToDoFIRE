@@ -101,10 +101,10 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemTealColor"/>
                         <constraints>
-                            <constraint firstItem="vVR-uZ-uwx" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="CJk-IW-kvv"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="vVR-uZ-uwx" secondAttribute="trailing" constant="40" id="Hqp-hA-01R"/>
-                            <constraint firstItem="vVR-uZ-uwx" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="Ikn-x6-2cW"/>
-                            <constraint firstItem="vVR-uZ-uwx" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="W9c-FX-F3B"/>
+                            <constraint firstItem="vVR-uZ-uwx" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="CJk-IW-kvv"/>
+                            <constraint firstAttribute="trailing" secondItem="vVR-uZ-uwx" secondAttribute="trailing" constant="40" id="Hqp-hA-01R"/>
+                            <constraint firstItem="vVR-uZ-uwx" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="40" id="Ikn-x6-2cW"/>
+                            <constraint firstItem="vVR-uZ-uwx" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="5" id="W9c-FX-F3B"/>
                         </constraints>
                     </view>
                     <connections>
